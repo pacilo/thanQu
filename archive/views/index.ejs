@@ -1,0 +1,38 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+
+"http://www.w3.org/tr/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+<head>
+     <meta charset="utf-8">
+     <link rel="stylesheet" type="text/css" href="/stylesheets/style1.css">
+</head>
+<body>
+  <script src="//code.jquery.com/jquery-2.1.4.min.js"></script>
+  <div id="page">
+    <header>
+      <h1>thanQu</h1>
+    </header>
+    <div class="setting">
+      <form method = "post" action="/class">
+    <div id="cnameset">
+      강의명 <input type="text" id='name' name="clname"/>
+    </div>
+    <div id="likenumset">
+      공감수 <input type="text" name="name1"/>
+    </div>
+    <div id="classset">
+      <input type="submit">
+      <!--<input type="button" value="확인" >-->
+    </div>
+    </form>
+    </div>
+  </div>
+  <script type="text/javascript">
+    function myRandom(max, min) {
+      return Math.floor(Math.random()*(max-min)) + min;
+    }
+    var rand = myRandom(1000,9999);
+    document.getElementById("name").value = rand;
+  </script>
+</body>
+</html>

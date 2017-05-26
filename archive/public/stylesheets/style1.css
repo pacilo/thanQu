@@ -1,0 +1,103 @@
+a{
+  text-decoration: none;
+  color:#444444;
+}
+body{
+  display: block;
+  overflow: scroll;
+  padding:0em auto;
+  margin: 0em auto;
+  width: 1000px;
+  background: #a3a3c2;
+  color:#444444;
+}
+#page{
+  text-align: center;
+}
+
+header{
+  padding:50px;
+}
+header h1{
+  font-size: 50px;
+}
+.setting{
+  padding:10px;
+}
+#cnameset{
+  padding:10px;
+}
+#cnameset_f{
+  font-size: 30px;
+  padding: 20px;
+}
+#likenumset{
+  padding:10px;
+}
+#classset{
+  padding:20px;
+}
+#classstart{
+  padding: 20px;
+}
+ /*thanQu2.html*/
+#logo{
+  display: inline;
+  /*padding-left: 50px;*/
+  padding-right: 100px;
+  float: left;
+  margin: 0px;
+}
+#cname{
+  display: inline;
+  font-size: 30px;
+  text-align: center;
+  float: right;
+  color: #000000;
+}
+.setting{
+  margin-top: 20px;
+}
+article{
+    display: block;
+    overflow: auto;
+    float: right;
+    width: 900px;
+    padding: 3em 50px 5em 50px;
+    background: #FFF;
+    border-top: 6px solid #47476b;
+    text-align: left;
+  }
+#question{
+  border: 1px solid gray;
+  margin-top: 20px;
+}
+#qheader p{
+  margin:10px;
+  float:right;
+}
+#qheader h4{
+  margin-bottom: 10px;
+  float: left;
+  padding-left: 40px;
+  font-size: 20px;
+}
+#qwrite{
+  padding:20px;
+  padding-top: 60px;
+  padding-left: 50px;
+}
+#commentlike{
+  padding:10px;
+  text-align: right;
+
+}
+
+footer{
+  width: 800px;
+  height: 50px;
+  margin: auto;
+  clear: both;
+  padding:10px;
+
+}
