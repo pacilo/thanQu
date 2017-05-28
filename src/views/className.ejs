@@ -7,19 +7,21 @@
      <link rel="stylesheet" type="text/css" href="/stylesheets/style1.css">
 </head>
 <body>
+  <script src="//code.jquery.com/jquery-2.1.4.min.js"></script>
   <div id="page">
     <header>
       <h1>thanQu</h1>
     </header>
     <div class="setting">
+      <form method = "post" action="/room">
       <div id="cnameset_f">
           <h2><%= classname %></h2>
       </div>
       <div id="classstart">
-        <input type="button" value="시작" />
+        <input type="submit" value="시작" />
       </div>
+    </form>
     </div>
   </div>
-
 </body>
 </html>

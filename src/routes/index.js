@@ -7,7 +7,10 @@ router.get('/', function(req, res, next) {
 });
 router.post('/class', function(req, res, next){
   res.render('className', {classname :  req.body.clname});
-})
+});
 
+router.post('/room', function(req, res, next){
+  res.render('realClass');
+});
 
 module.exports = router;
