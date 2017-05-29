@@ -41,6 +41,7 @@ app.use(session({
 app.use('/', index);
 app.use('/class', index);
 app.use('/room', index);
+app.use('/end', index)
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

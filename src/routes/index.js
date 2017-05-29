@@ -11,8 +11,14 @@ router.post('/class', function(req, res, next){
   res.render('className', {clname : req.session.clname});
 });
 
-router.get('/room', function(req, res, next){
-  res.render('realClass');
+router.post('/room', function(req, res, next){
+  res.render('realClass',{calname : req.session.clname});
 });
 
+router.post('/end', function(req, res, next){
+  req.session.destroy(function(){
+    req.session;
+  });
+  res.redirect('/');
+});
 module.exports = router;
