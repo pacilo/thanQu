@@ -3,10 +3,17 @@ var router = express.Router();
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
-  res.render('index');
+  var clname = req.session.clname;
+  if(!clname) {
+    res.render('index');
+  } else {
+    res.render('className', {clname : clname});
+  }
 });
+
 router.post('/class', function(req, res, next){
-  res.render('className', {classname :  req.body.clname});
+  req.session.clname = req.body.clname;
+  res.redirect('/');
 });
 
 router.get('/room', function(req, res, next){
