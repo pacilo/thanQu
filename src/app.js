@@ -12,7 +12,7 @@ var FileStore = require('session-file-store')(session);//추가
 var index = require('./routes/index');
 
 var app = express();
-var server = app.listen(80);
+var server = app.listen(8080);
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
