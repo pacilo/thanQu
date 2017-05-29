@@ -59,4 +59,5 @@ typings/
 
 *.DS_store
 *.swp
+src/package.json
 src/session/*.json
