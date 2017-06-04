@@ -13,9 +13,9 @@
       <h1>thanQu</h1>
     </header>
     <div class="setting">
-      <form method = "post" action="/room">
+      <form method = "get" action="/questionList/classname=<%= className %>">
       <div id="cnameset_f">
-          <h2><%= clname %></h2>
+          <h2><%= className %></h2>
       </div>
       <div id="classstart">
         <input type="submit" value="시작" />

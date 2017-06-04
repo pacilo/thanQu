@@ -8,21 +8,31 @@
   <div id="page">
     <header>
       <h1 id="logo"><a href = "javascript:location.reload()">thanQu</a></h1>
-      <h2 id="cname"><%= calname %></h2>
+      <form action="/questionList/classname=<%= className %>" method="get">
+        <input type="submit" value="새로고침">
+      </form>
+      <h2 id="cname"><%= className %></h2>
     </header>
     <article>
-      <section id="question">
-        <div id="qheader">
+      <section id="question" >
+        <% if(question == null || question.length == 0){ %>
+           <p class="noData">
+             <h1 colspan="3">There is no data to show :(</h1>
+           </p>
+        <% } else { %>
+        <% question.forEach(function(question){ %>
+        <div id="qheader" onclick="window.location = '/classDetail/<%= question.q_id %>'">
           <h4>과제 제출이 언제까지인가요?</h4>
-          <p>2017/04/26 15:58</p>
+          <p><%= question.q_date %></p>
         </div>
         <div id="qwrite">
-          <p>방금 교수님께서 이번 주 과제 언제까지 제출하라고 하셨나요??</p>
-          <p>어디에 내는지도  아시는 분!</p>
+          <p><%= question.q_contents %></p>
         </div>
         <div id="commentlike">
-          댓글 공감
+          <p><%= question.q_like %><%= question.q_commentCnt %></p>
         </div>
+          <% }) %>
+        <% } %>
       </section>
     </article>
     <form method="post" action ="/end">
