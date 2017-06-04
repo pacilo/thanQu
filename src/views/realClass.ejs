@@ -14,22 +14,21 @@
       <h2 id="cname"><%= className %></h2>
     </header>
     <article>
-      <section id="question" >
+      <section id="question">
         <% if(question == null || question.length == 0){ %>
            <p class="noData">
              <h1 colspan="3">There is no data to show :(</h1>
            </p>
         <% } else { %>
         <% question.forEach(function(question){ %>
-        <div id="qheader" onclick="window.location = '/classDetail/<%= question.q_id %>'">
-          <h4>과제 제출이 언제까지인가요?</h4>
-          <p><%= question.q_date %></p>
+        <div id="qheader">
+          <p><%= question.time %></p>
         </div>
-        <div id="qwrite">
-          <p><%= question.q_contents %></p>
+        <div id="qwrite" onclick="window.location = '/classDetail/<%= question.questionID %>'">
+          <p><%= question.content %></p>
         </div>
         <div id="commentlike">
-          <p><%= question.q_like %><%= question.q_commentCnt %></p>
+          <p><%= question.likeCnt %>&nbsp;<%= question.commentCnt %></p>
         </div>
           <% }) %>
         <% } %>
