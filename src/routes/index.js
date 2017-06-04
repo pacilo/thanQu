@@ -117,8 +117,9 @@ router.get('/questionList/:className', function(req, res){
     }
   });
 });
-
+/*
 router.get('/classDetail/:questionID', function(req, res){
+
   questionID = req.params.questionID;
   className = req.session.className;
   classId = req.session.classID;
@@ -149,7 +150,7 @@ router.get('/classDetail/:questionID', function(req, res){
     }
   });
 });
-
+*/
 router.post('/end', function(req, res){
   req.session.destroy(function(err){
     if(err) console.error('err', err);
