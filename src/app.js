@@ -10,10 +10,10 @@ var FileStore = require('session-file-store')(session);//추가
 
 
 var index = require('./routes/index');
-var classDetail = require('./routes/classDetail');
+// var classDetail = require('./routes/classDetail');
 
 var app = express();
-var server = app.listen(8888);
+var server = app.listen(8080);
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -43,7 +43,7 @@ app.use('/', index);
 app.use('/classConfirm', index);
 app.use('/questionList', index);
 app.use('/end', index);
-app.use('/classDetail', classDetail);
+app.use('/classDetail', index);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

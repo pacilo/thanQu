@@ -117,9 +117,33 @@ router.get('/questionList/:className', function(req, res){
     }
   });
 });
-/*
-router.get('/classDetail/:questionID', function(req, res){
+//
+// router.get('/classDetail/:questionID', function(req, res){
+//   questionID = req.params.questionID;
+//   console.log(questionID);
+//   console.log(req.session.className);
+//   pool.getConnection(function(error, connection){
+//     console.log('들어왔어요');
+//     if (error)
+//     {
+//       console.log("getConnection Error" + error);
+//       res.sendStatus(503);
+//       //connection.release();
+//     } else {
+//       connection.query('select * from question where id = ?', [questionID], function(error, result)
+//       {
+//         if(error) console.log("selecting Error" + error);
+//         else {
+//           console.log(result);
+//           res.render('classDetail', {className : req.session.className, question : result});
+//         }
+//         connection.release();
+//       });
+//     }
+//   });
+// });
 
+router.get('/classDetail/:questionID', function(req, res){
   questionID = req.params.questionID;
   className = req.session.className;
   classId = req.session.classID;
@@ -135,7 +159,7 @@ router.get('/classDetail/:questionID', function(req, res){
     }
 
     else {
-      connection.query('select * from question,comments where question.q_id=comments.q_id=?', [questionID], function(error, comment)
+      connection.query('select * from question,comment where question.id=comment.questionID=?', [questionID], function(error, comment)
       {
         if(error) console.log("selecting Error" + error);
         else {
@@ -150,7 +174,7 @@ router.get('/classDetail/:questionID', function(req, res){
     }
   });
 });
-*/
+
 router.post('/end', function(req, res){
   req.session.destroy(function(err){
     if(err) console.error('err', err);

@@ -1,38 +1,38 @@
 <!DOCTYPE html>
 <html>
 <head>
-     <meta charset="utf-8">
-     <link rel="stylesheet" type="text/css" href="/stylesheets/style1.css">
+  <meta charset="utf-8">
+  <link rel="stylesheet" type="text/css" href="/stylesheets/style1.css">
 </head>
 <body>
   <div id="page">
     <header>
-      <h1 id="logo"><a href = "javascript:location.reload()">thanQu</a></h1>
-      <h2 id="cname"><%= className %></h2>
+      <!-- <h1 id="logo"><a href = "javascript:location.reload()">thanQu</a></h1> -->
+      <!-- <h2 id="cname"><%= className %></h2> -->
     </header>
     <article>
       <section id="question">
         <div id="qheader">
-          <p>2017/04/26 15:58</p>
+          <!-- <p><%= question.time %></p> -->
         </div>
         <div id="qwrite">
-          <p><%= co[0].q_contents %></p>
+          <!-- <p><%= question.content %></p> -->
         </div>
         <div id="commentlike">
-          댓글 <%= co[0].q_commentCnt %> 공감 <%= co[0].q_like %>
+          <!-- 댓글&nbsp;<%= question.commentCnt %>&nbsp;공감&nbsp;<%= question.likeCnt %> -->
         </div>
       </section>
       <section id="comment">
-        <% co.forEach(function(co){ %>
-        <h5><%= co.co_contents %></h5>
-        <% }) %>
+        <!-- <% co.forEach(function(co){ %>
+        <h5><%= co.content %></h5>
+        <% }) %> -->
       </section>
     </article>
-    <form method="get" action ="/questionList/classname=<%= className %>">
-    <footer>
-      <input type="submit" value="목록" />
-    </footer>
-  </form>
+    <!-- <form method="get" action ="/questionList/classname=<%= className %>">
+      <footer>
+        <input type="submit" value="목록" />
+      </footer>
+    </form> -->
   </div>
   <script>
 

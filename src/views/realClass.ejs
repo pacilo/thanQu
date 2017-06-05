@@ -24,11 +24,11 @@
         <div id="qheader">
           <p><%= question.time %></p>
         </div>
-        <div id="qwrite" onclick="window.location = '/classDetail/<%= question.questionID %>'">
+        <div id="qwrite" onclick="window.location = '/classDetail/<%= question.id %>'">
           <p><%= question.content %></p>
         </div>
         <div id="commentlike">
-          <p><%= question.likeCnt %>&nbsp;<%= question.commentCnt %></p>
+          <p><%= question.commentCnt %>&nbsp;<%= question.likeCnt %></p>
         </div>
           <% }) %>
         <% } %>
