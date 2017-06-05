@@ -13,13 +13,13 @@
     <article>
       <section id="question">
         <div id="qheader">
-          <p><%= questionInfo.time %></p>
+          <p><%= questionInfo[0].time %></p>
         </div>
         <div id="qwrite">
-          <p><%= questionInfo.content %></p>
+          <p><%= questionInfo[0].content %></p>
         </div>
         <div id="commentlike">
-          댓글&nbsp;<%= questionInfo.commentCnt %>&nbsp;공감&nbsp;<%= questionInfo.likeCnt %>
+          댓글&nbsp;<%= questionInfo[0].commentCnt %>&nbsp;공감&nbsp;<%= questionInfo[0].likeCnt %>
         </div>
       </section>
       <section id="comment">
