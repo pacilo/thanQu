@@ -159,19 +159,21 @@ router.get('/classDetail/:questionID', function(req, res){
     }
 
     else {
-      connection.query('select * from question,comment where question.id=comment.questionID=?', [questionID], function(error, comment)
+      connection.query('select * from question where question.id=?', [questionID], function(error, questionData)
       {
         if(error) console.log("selecting Error" + error);
         else {
           console.log('넘어갑니다.');
-          console.log(comment);
 
-          res.render('classDetail', {className : req.session.className, co : comment});
-          connection.release();
+          connection.query('select * from comment where comment.questionID=?', [questionID], function(error, comments) {
+            console.log(questionData);
+            console.log(comments);
+            res.render('classDetail', {className : req.session.className, questionInfo : questionData, commentsInfo : comments});
+          })
         }
-
       });
     }
+    connection.release();
   });
 });
 
