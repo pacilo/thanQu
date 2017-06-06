@@ -377,7 +377,7 @@ router.get('/api/commentList/:questionID', function(req,res){
             count : result.length,
             questioninfos : result
           });
-        } else{
+        } else {
           res.json({success:false});
         }
       });
