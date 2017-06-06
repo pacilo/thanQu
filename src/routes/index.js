@@ -117,31 +117,6 @@ router.get('/questionList/:className', function(req, res){
     }
   });
 });
-//
-// router.get('/classDetail/:questionID', function(req, res){
-//   questionID = req.params.questionID;
-//   console.log(questionID);
-//   console.log(req.session.className);
-//   pool.getConnection(function(error, connection){
-//     console.log('들어왔어요');
-//     if (error)
-//     {
-//       console.log("getConnection Error" + error);
-//       res.sendStatus(503);
-//       //connection.release();
-//     } else {
-//       connection.query('select * from question where id = ?', [questionID], function(error, result)
-//       {
-//         if(error) console.log("selecting Error" + error);
-//         else {
-//           console.log(result);
-//           res.render('classDetail', {className : req.session.className, question : result});
-//         }
-//         connection.release();
-//       });
-//     }
-//   });
-// });
 
 router.get('/classDetail/:questionID', function(req, res){
   questionID = req.params.questionID;
@@ -234,9 +209,9 @@ router.post('/api/login', function(req,res){
               res.json({success:false, message:"입력하신 ID가 없습니다."});
             } else {
               if (result[0].userPW == req.body.pw) {
-                res.json({success:true, message :"로그인 성공", userID:result[0].id});
                 req.session.userID = result[0].id;
                 req.session.userName = req.body.id;
+                res.json({success:true, message :"로그인 성공", userID:result[0].id});
               } else {
                 res.json({success:false, message:"비밀번호가 일치하지 않습니다."});
               }
@@ -318,13 +293,46 @@ router.get('/api/questionList/:classID', function(req, res) {
           res.json({
               success:true,
               count:result.length,
-              classinfos:result
+              questionInfos:result
              });
         } else {
           res.json({success:false});
         }
       });
       connection.release();
+    }
+  });
+});
+
+router.get('/api/questionDetail/:questionID', function(req, res) {
+  console.log('API: get question detail');
+  pool.getConnection(function(error, connection) {
+    if (error) {
+      console.log('db connection failed: ' + error);
+      res.sendStatus(503);
+    } else {
+      connection.query('select * from question where id=?', [req.params.questionID], function(err, result) {
+        if (err == null) {
+          console.log(result);
+          console.log(req.params.questionID);
+          console.log(req.session.userID);
+          connection.query('select * from heart where (questionID=? AND userID=?)', [req.params.questionID, req.session.userID], function(err2, result2) {
+            if (err2 == null) {
+              console.log(result2);
+              res.json({
+                success:true,
+                info:result,
+                didLike: (result2.length!=0)
+              });
+            } else {
+              res.json({success:false, message:err2});
+            }
+          });
+          connection.release();
+        } else {
+          res.json({success:false, message:err});
+        }
+      });
     }
   });
 });
