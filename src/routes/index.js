@@ -235,6 +235,8 @@ router.post('/api/login', function(req,res){
             } else {
               if (result[0].userPW == req.body.pw) {
                 res.json({success:true, message :"로그인 성공", userID:result[0].id});
+                req.session.userID = result[0].id;
+                req.session.userName = req.body.id;
               } else {
                 res.json({success:false, message:"비밀번호가 일치하지 않습니다."});
               }
