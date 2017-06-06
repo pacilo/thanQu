@@ -225,10 +225,10 @@ router.post('/api/login', function(req,res){
 });
 
 router.post('/api/logout',function(req, res){
-    req.session.destroy(function(){
-      req.session;
-    });
-    res.json({success:true});
+  req.session.destroy(function(){
+    req.session;
+  });
+  res.json({success:true});
 });
 
 router.get('/api/classList', function(req, res) {
@@ -242,10 +242,10 @@ router.get('/api/classList', function(req, res) {
         console.log(result);
         if (err == null) {
           res.json({
-              success:true,
-              count:result.length,
-              classinfos:result
-             });
+            success:true,
+            count:result.length,
+            classinfos:result
+          });
         } else {
           res.json({success:false});
         }
@@ -291,10 +291,10 @@ router.get('/api/questionList/:classID', function(req, res) {
         console.log(result);
         if (err == null) {
           res.json({
-              success:true,
-              count:result.length,
-              questionInfos:result
-             });
+            success:true,
+            count:result.length,
+            questionInfos:result
+          });
         } else {
           res.json({success:false});
         }
@@ -333,6 +333,55 @@ router.get('/api/questionDetail/:questionID', function(req, res) {
           res.json({success:false, message:err});
         }
       });
+    }
+  });
+});
+
+router.post('/api/makeComment', function(req, res){
+  console.log('API : post makeComment');
+  console.log(req.body.questionID);
+  console.log(req.body.userID);
+  console.log(req.body.content);
+  pool.getConnection(function(error, connection) {
+    if(error){
+      console.log('db connection failed: ' + error);
+      res.sendStatus(503);
+    } else {
+      connection.query('insert into comment(questionID, userID, content) values(?,?,?)',[req.body.questionID, req.body.userID, req.body.content], function(error, result) {
+        console.log(result);
+        if(error !=null){
+          console.log('insert query err: ', error);
+          res.json({success:false});
+        } else{
+          res.json({success: true});
+        }
+      });
+      connection.release();
+    }
+  });
+});
+
+router.get('/api/commentList/:questionID', function(req,res){
+  console.log('API: get commentList');
+  console.log(req.params.questionID);
+  pool.getConnection(function(error, connection){
+    if(error){
+      console.log('db connection failed: '+error);
+      res.sendStatus(503);
+    } else {
+      connection.query('select * from comment where questionID=?', [req.params.questionID], function(error, result){
+        console.log(result);
+        if(error == null){
+          res.json({
+            success : true,
+            count : result.length,
+            questioninfos : result
+          });
+        } else{
+          res.json({success:false});
+        }
+      });
+      connection.release();
     }
   });
 });
