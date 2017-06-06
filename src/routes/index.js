@@ -249,6 +249,13 @@ router.post('/api/login', function(req,res){
   }
 });
 
+router.post('/api/logout',function(req, res){
+    req.session.destroy(function(){
+      req.session;
+    });
+    res.json({success:true});
+});
+
 router.get('/api/classList', function(req, res) {
   console.log('API: get classlist');
   pool.getConnection(function(error, connection) {
