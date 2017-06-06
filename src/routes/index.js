@@ -213,6 +213,40 @@ router.post('/api/join', function(req, res){
   }
 });
 
+router.post('/api/login', function(req,res){
+  console.log(req.body.id);
+  console.log(req.body.pw);
+  if(req.body.id ==null || req.body.pw==null){
+    res.json({sucess:false});
+  } else {
+    pool.getConnection(function(error, connection){
+      if (error)
+      {
+        console.log("getConnection Error"+ error);
+        res.sendStatus(503);
+      } else {
+        connection.query('select * from user where userID=?',[req.body.id], function(error, result){
+          if (error != null) {
+            res.json({success:false, message:"Internal Error"});
+          } else {
+            console.log(result);
+            if (result.length <= 0) {
+              res.json({success:false, message:"입력하신 ID가 없습니다."});
+            } else {
+              if (result[0].userPW == req.body.pw) {
+                res.json({success:true, message :"로그인 성공", userID:result[0].id});
+              } else {
+                res.json({success:false, message:"비밀번호가 일치하지 않습니다."});
+              }
+            }
+          }
+          connection.release();
+        });
+      }
+    });
+  }
+});
+
 router.get('/api/classList', function(req, res) {
   console.log('API: get classlist');
   pool.getConnection(function(error, connection) {
@@ -254,6 +288,31 @@ router.post('/api/makeQuestion', function(req, res) {
           res.json({success:false});
         } else {
           res.json({success:true});
+        }
+      });
+      connection.release();
+    }
+  });
+});
+
+router.get('/api/questionList/:classID', function(req, res) {
+  console.log('API: get questinoList');
+  console.log(req.params.classID);
+  pool.getConnection(function(error, connection) {
+    if (error) {
+      console.log('db connection failed: ' + error);
+      res.sendStatus(503);
+    } else {
+      connection.query('select * from question where classID=?', [req.params.classID], function(err, result) {
+        console.log(result);
+        if (err == null) {
+          res.json({
+              success:true,
+              count:result.length,
+              classinfos:result
+             });
+        } else {
+          res.json({success:false});
         }
       });
       connection.release();
