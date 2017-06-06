@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <link rel="stylesheet" type="text/css" href="/stylesheets/style1.css">
+</head>
+<body>
+  <div id="page">
+    <header>
+      <h1 id="logo"><a href = "javascript:location.reload()">thanQu</a></h1>
+      <h2 id="cname"><%= className %></h2>
+    </header>
+    <article>
+      <section id="question">
+        <div id="qheader">
+          <p><%= questionInfo[0].time %></p>
+        </div>
+        <div id="qwrite">
+          <p><%= questionInfo[0].content %></p>
+        </div>
+        <div id="commentlike">
+          댓글&nbsp;<%= questionInfo[0].commentCnt %>&nbsp;공감&nbsp;<%= questionInfo[0].likeCnt %>
+        </div>
+      </section>
+      <section id="comment">
+        <% commentsInfo.forEach(function(info){ %>
+          <h5><%= info.content %></h5>
+        <% }) %>
+      </section>
+    </article>
+    <form method="get" action ="/questionList/classname=<%= className %>">
+      <footer>
+        <input type="submit" value="목록" />
+      </footer>
+    </form>
+  </div>
+  <script>
+
+  </script>
+</body>
+</html>

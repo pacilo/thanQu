@@ -24,6 +24,17 @@ header h1{
 .setting{
   padding:10px;
 }
+input[type=submit] {
+  width: 200px;
+  height: 100px;
+  border-radius: 3px;
+  font-weight: 600;
+  border-color: transparent;
+  font-size: 25px;
+  background: hotpink;
+  color: #fff;
+ cursor: pointer;
+}
 #cnameset{
   padding:10px;
 }

@@ -1,38 +1,50 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
 
 "http://www.w3.org/tr/xhtml1/DTD/xhtml1-transitional.dtd">
+
 <html>
-<head>
-     <meta charset="utf-8">
-     <link rel="stylesheet" type="text/css" href="/stylesheets/style1.css">
-</head>
-<body>
-  <script src="//code.jquery.com/jquery-2.1.4.min.js"></script>
-  <div id="page">
-    <header>
-      <h1>thanQu</h1>
-    </header>
-    <div class="setting">
-      <form method = "post" action="/class">
-    <div id="cnameset">
-      강의명 <input type="text" id='name' name="clname"/>
-    </div>
-    <div id="likenumset">
-      공감수 <input type="text" name="name1"/>
-    </div>
-    <div id="classset">
-      <input type="submit" value="확인">
-      <!--<input type="button" value="확인" >-->
-    </div>
-    </form>
-    </div>
-  </div>
-  <script type="text/javascript">
-    function myRandom(max, min) {
-      return Math.floor(Math.random()*(max-min)) + min;
-    }
-    var rand = myRandom(1000,9999);
-    document.getElementById("name").value = rand;
-  </script>
-</body>
-</html>
+	<head>
+		<title>thanQu</title>
+    <meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" href="/stylesheets/main.css" />
+    <noscript><link rel="stylesheet" href="noscript.css" /></noscript>
+  </head>
+	<body class="is-loading">
+    <!-- Wrapper -->
+			<div id="wrapper">
+        <!-- Main -->
+				<section id="background">
+					<header>
+						<h1>thanQu</h1>
+						<p>Ask Question in Class</p>
+					</header>
+ 					<section id="main">
+
+            <footer>
+							<ul class="icons">
+								<form method = "post" action="/classConfirm">
+                  강의명 <input type="text" id='name' name="className"/>
+                  공감수 <input type="text" name="likeMinimum"/>
+                  <br>
+                  <input type="submit" value="확인">
+                </form>
+							</ul>
+						</footer>
+					</section>
+				</section>
+          <!-- Footer -->
+					<footer id="footer">
+						<ul class="copyright">
+							<li>&copy; thanQu</li><li>School: <a href="http://swu.ac.kr">Seoul Women's University</a></li>
+						</ul>
+					</footer>
+        </div>
+        <script>
+				if ('addEventListener' in window) {
+					window.addEventListener('load', function() { document.body.className = document.body.className.replace(/\bis-loading\b/, ''); });
+					document.body.className += (navigator.userAgent.match(/(MSIE|rv:11\.0)/) ? ' is-ie' : '');
+				}
+			</script>
+      </body>
+   </html>

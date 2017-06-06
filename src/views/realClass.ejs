@@ -1,38 +1,73 @@
-<!DOCTYPE html>
-<html>
-<head>
-     <meta charset="utf-8">
-     <link rel="stylesheet" type="text/css" href="/stylesheets/style1.css">
-</head>
-<body>
-  <div id="page">
-    <header>
-      <h1 id="logo"><a href = "javascript:location.reload()">thanQu</a></h1>
-      <h2 id="cname"><%= calname %></h2>
-    </header>
-    <article>
-      <section id="question">
-        <div id="qheader">
-          <h4>과제 제출이 언제까지인가요?</h4>
-          <p>2017/04/26 15:58</p>
-        </div>
-        <div id="qwrite">
-          <p>방금 교수님께서 이번 주 과제 언제까지 제출하라고 하셨나요??</p>
-          <p>어디에 내는지도  아시는 분!</p>
-        </div>
-        <div id="commentlike">
-          댓글 공감
-        </div>
-      </section>
-    </article>
-    <form method="post" action ="/end">
-    <footer>
-      <input type="submit" value="종료" />
-    </footer>
-  </form>
-  </div>
-  <script>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
 
-  </script>
-</body>
-</html>
+"http://www.w3.org/tr/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html>
+	<head>
+		<title>thanQu</title>
+    <meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" href="/stylesheets/main.css" />
+    <noscript><link rel="stylesheet" href="noscript.css" /></noscript>
+  </head>
+	<body class="is-loading">
+    <!-- Wrapper -->
+			<div id="wrapper">
+        <!-- Main -->
+        <section id="background">
+          <header>
+            <h1><a href = "javascript:location.reload()">thanQu</a></h1>
+            <p id="cname"><%= className %></p>
+          </header>
+ 					<section id="main">
+
+            <!-- <footer> -->
+            <article>
+							<!-- <ul class="icons"> -->
+              <section id="questions">
+                <% if(question == null || question.length == 0){ %>
+                 <p class="noData">
+                   <h1 colspan="3">There is no data to show :(</h1>
+                 </p>
+                <% } else { %>
+                <% question.forEach(function(question){ %>
+                  <div id="qheader">
+                    <p><%= question.time %></p>
+                  </div>
+                  <div id="qwrite" onclick="window.location = '/classDetail/<%= question.id %>'">
+                    <p><%= question.content %></p>
+                  </div>
+                  <div id="commentlike">
+                    <p><%= question.commentCnt %>&nbsp;<%= question.likeCnt %></p>
+                  </div>
+
+                  <% }) %>
+                <% } %>
+              </section>
+
+							<!-- </ul> -->
+						<!-- </footer> -->
+          </article>
+            <br>
+            <form method="post" action ="/end">
+              <footer>
+              <input type="submit" value="종료" />
+              </footer>
+            </form>
+					</section>
+        </section>
+          <!-- Footer -->
+					<footer id="footer">
+						<ul class="copyright">
+							<li>&copy; thanQu</li><li>School: <a href="http://swu.ac.kr">Seoul Women's University</a></li>
+						</ul>
+					</footer>
+        </div>
+        <script>
+				if ('addEventListener' in window) {
+					window.addEventListener('load', function() { document.body.className = document.body.className.replace(/\bis-loading\b/, ''); });
+					document.body.className += (navigator.userAgent.match(/(MSIE|rv:11\.0)/) ? ' is-ie' : '');
+				}
+			</script>
+      </body>
+   </html>
