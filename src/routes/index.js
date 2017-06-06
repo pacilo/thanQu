@@ -337,6 +337,52 @@ router.get('/api/questionDetail/:questionID', function(req, res) {
   });
 });
 
+router.put('/api/addLike', function(req, res) {
+  console.log('API: put addLike');
+  console.log(req.body.questionID);
+  console.log(req.body.userID);
+  pool.getConnection(function(error, connection) {
+    if(error){
+      console.log('db connection failed: ' + error);
+      res.sendStatus(503);
+    } else {
+      connection.query('insert into heart(questionID, userID) values(?,?)',[req.body.questionID, req.body.userID], function(error, result) {
+        console.log(result);
+        if(error !=null){
+          console.log('insert query err: ', error);
+          res.json({success:false});
+        } else{
+          res.json({success: true});
+        }
+      });
+      connection.release();
+    }
+  });
+});
+
+router.delete('/api/removeLike', function(req, res){
+  console.log('API : delete remove like');
+  console.log(req.body.questionID);
+  console.log(req.body.userID);
+  pool.getConnection(function(error, connection) {
+    if(error){
+      console.log('db connection failed: ' + error);
+      res.sendStatus(503);
+    } else {
+      connection.query('delete from heart where (questionID=? and userID=?)',[req.body.questionID, req.body.userID], function(error, result) {
+        console.log(result);
+        if(error !=null){
+          console.log('insert query err: ', error);
+          res.json({success:false});
+        } else{
+          res.json({success: true});
+        }
+      });
+      connection.release();
+    }
+  });
+});
+
 router.post('/api/makeComment', function(req, res){
   console.log('API : post makeComment');
   console.log(req.body.questionID);
