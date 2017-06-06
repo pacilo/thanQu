@@ -43,9 +43,6 @@ app.use('/questionList', index);
 app.use('/end', index);
 app.use('/classDetail', index);
 
-// RESTful
-app.use('/join', index);
-
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
   var err = new Error('Not Found');

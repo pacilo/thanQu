@@ -184,7 +184,7 @@ router.post('/end', function(req, res){
   });
 });
 
-
+/* restful api */
 router.post('/api/join', function(req, res){
   console.log(req.body.id);
   console.log(req.body.pw);
@@ -211,6 +211,54 @@ router.post('/api/join', function(req, res){
       connection.release();
     });
   }
+});
+
+router.get('/api/classList', function(req, res) {
+  console.log('API: get classlist');
+  pool.getConnection(function(error, connection) {
+    if (error) {
+      console.log('db connection failed: ' + error);
+      res.sendStatus(503);
+    } else {
+      connection.query('select * from class', function(err, result) {
+        console.log(result);
+        if (err == null) {
+          res.json({
+              success:true,
+              count:result.length,
+              classinfos:result
+             });
+        } else {
+          res.json({success:false});
+        }
+      });
+      connection.release();
+    }
+  });
+});
+
+router.post('/api/makeQuestion', function(req, res) {
+  console.log('API: post makeQuestion');
+  console.log(req.body.classID);
+  console.log(req.body.userID);
+  console.log(req.body.content);
+  pool.getConnection(function(error, connection) {
+    if (error) {
+      console.log('db connection failed: ' + error);
+      res.sendStatus(503);
+    } else {
+      connection.query('insert into question (classID, userID, content) values (?, ?, ?)', [req.body.classID, req.body.userID, req.body.content], function(err, result) {
+        console.log(result);
+        if (err != null) {
+          console.log('insert query err: ', err);
+          res.json({success:false});
+        } else {
+          res.json({success:true});
+        }
+      });
+      connection.release();
+    }
+  });
 });
 
 module.exports = router;
