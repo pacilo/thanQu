@@ -23,12 +23,9 @@ app.set('view engine', 'ejs');
 //app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
 app.use(logger('dev'));
 app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
-
-app.use(bodyParser.urlencoded({extended: false}));//미들웨어 등록부분
-
 //resave 세션아이디를 접속할때마다 발급하지 않는다
 
 app.use(session({
@@ -39,11 +36,15 @@ app.use(session({
   store:new FileStore()//sessions라는 디렉토리가 생김
 }));
 
+// RESTless
 app.use('/', index);
 app.use('/classConfirm', index);
 app.use('/questionList', index);
 app.use('/end', index);
 app.use('/classDetail', index);
+
+// RESTful
+app.use('/join', index);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

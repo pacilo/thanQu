@@ -184,4 +184,33 @@ router.post('/end', function(req, res){
   });
 });
 
+
+router.post('/api/join', function(req, res){
+  console.log(req.body.id);
+  console.log(req.body.pw);
+  console.log(req.body.email);
+  if (req.body.id == null || req.body.pw == null || req.body.email == null) {
+    res.json({success:false});
+  } else {
+    pool.getConnection(function(error, connection){
+      if (error)
+      {
+        console.log("getConnection Error" + error);
+        res.sendStatus(503);
+      } else {
+        connection.query('insert into user values(null, ?, ?, ?)', [req.body.id, req.body.pw, req.body.email], function(err, result) {
+          console.log(result);
+          if (err != null) {
+            console.log('selecting query err: ', err);
+            res.json({success:false, message:"중복된 정보가 존재합니다."});
+          } else {
+            res.json({success:true});
+          }
+        });
+      }
+      connection.release();
+    });
+  }
+});
+
 module.exports = router;
