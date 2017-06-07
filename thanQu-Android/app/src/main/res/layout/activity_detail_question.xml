@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:id="@+id/q_data"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:orientation="vertical">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="35dp"
+                android:layout_alignParentEnd="true">
+
+                <TextView
+                    android:id="@+id/time"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="10dp" />
+            </LinearLayout>
+        </RelativeLayout>
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="80dp"
+            android:layout_marginBottom="8dp">
+
+            <TextView
+                android:id="@+id/content"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:textSize="16sp" />
+        </ScrollView>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="#dddddd" />
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical|right"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/commentCnt"
+                    android:layout_width="match_parent"
+                    android:layout_height="30dp"
+                    android:layout_marginRight="8dp"
+                    android:gravity="center_vertical" />
+
+                <TextView
+                    android:id="@+id/likeCnt"
+                    android:layout_width="match_parent"
+                    android:layout_height="30dp"
+                    android:layout_marginRight="10dp"
+                    android:clickable="true"
+                    android:gravity="center_vertical" />
+            </LinearLayout>
+        </FrameLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/commentLayout"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_alignParentBottom="true"
+        android:focusable="true"
+        android:focusableInTouchMode="true"
+        android:orientation="horizontal">
+
+        <EditText
+            android:id="@+id/input"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"></EditText>
+
+        <Button
+            android:id="@+id/sendBtn"
+            android:layout_width="100dp"
+            android:layout_height="match_parent"
+            android:layout_weight="0"
+            android:text="전송" />
+    </LinearLayout>
+
+    <View
+        android:id="@+id/partition2"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_above="@id/commentLayout"
+        android:background="#dddddd" />
+
+    <View
+        android:id="@+id/partition"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_below="@id/q_data"
+        android:background="#dddddd" />
+
+    <ListView
+        android:id="@+id/commentList"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@id/partition2"
+        android:layout_below="@id/partition" />
+
+</RelativeLayout>
