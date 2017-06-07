@@ -304,7 +304,7 @@ router.get('/api/questionList/:classID', function(req, res) {
   });
 });
 
-router.get('/api/questionDetail/:questionID', function(req, res) {
+router.get('/api/questionDetail/:questionID/:userID', function(req, res) {
   console.log('API: get question detail');
   pool.getConnection(function(error, connection) {
     if (error) {
@@ -315,8 +315,8 @@ router.get('/api/questionDetail/:questionID', function(req, res) {
         if (err == null) {
           console.log(result);
           console.log(req.params.questionID);
-          console.log(req.session.userID);
-          connection.query('select * from heart where (questionID=? AND userID=?)', [req.params.questionID, req.session.userID], function(err2, result2) {
+          console.log(req.params.userID);
+          connection.query('select * from heart where (questionID=? AND userID=?)', [req.params.questionID, req.params.userID], function(err2, result2) {
             if (err2 == null) {
               console.log(result2);
               res.json({
