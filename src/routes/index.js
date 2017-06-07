@@ -421,7 +421,7 @@ router.get('/api/commentList/:questionID', function(req,res){
           res.json({
             success : true,
             count : result.length,
-            questioninfos : result
+            infos : result
           });
         } else {
           res.json({success:false});
