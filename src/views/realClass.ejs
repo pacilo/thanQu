@@ -11,6 +11,7 @@
     <noscript><link rel="stylesheet" href="noscript.css" /></noscript>
   </head>
 	<body class="is-loading">
+		<script src="//code.jquery.com/jquery-2.1.4.min.js"></script>
     <!-- Wrapper -->
 			<div id="wrapper">
         <!-- Main -->
@@ -24,13 +25,14 @@
             <!-- <footer> -->
             <article>
 							<!-- <ul class="icons"> -->
-              <section id="questions">
+              <section>
                 <% if(question == null || question.length == 0){ %>
                  <p class="noData">
                    <h1 colspan="3">There is no data to show :(</h1>
                  </p>
                 <% } else { %>
                 <% question.forEach(function(question){ %>
+									<section id="questions">
                   <div id="qheader">
                     <p><%= question.time %></p>
                   </div>
@@ -38,9 +40,9 @@
                     <p><%= question.content %></p>
                   </div>
                   <div id="commentlike">
-                    <p><%= question.commentCnt %>&nbsp;<%= question.likeCnt %></p>
+                    <p>댓글<%= question.commentCnt %>&nbsp;공감<%= question.likeCnt %></p>
                   </div>
-
+										</section>
                   <% }) %>
                 <% } %>
               </section>
