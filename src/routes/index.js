@@ -360,7 +360,7 @@ router.put('/api/addLike', function(req, res) {
   });
 });
 
-router.delete('/api/removeLike', function(req, res){
+router.put('/api/removeLike', function(req, res){
   console.log('API : delete remove like');
   console.log(req.body.questionID);
   console.log(req.body.userID);
