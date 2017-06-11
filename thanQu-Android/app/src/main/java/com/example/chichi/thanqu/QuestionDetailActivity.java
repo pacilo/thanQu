@@ -159,6 +159,12 @@ public class QuestionDetailActivity extends AppCompatActivity {
         sendBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                String s = editText.getText().toString();
+                if (s.length() < 6 || s.length() > 32) {
+                    Toast.makeText(QuestionDetailActivity.this, "댓글은 6자 이상 32자 이하로 작성해주세요.", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
                 StringRequest addCommentRequest = new StringRequest(Request.Method.POST, ROOT + MAKECOMMENT, new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
