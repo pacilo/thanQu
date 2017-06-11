@@ -1,17 +1,27 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <meta charset="utf-8">
-  <link rel="stylesheet" type="text/css" href="/stylesheets/style1.css">
+  <title>thanQu</title>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="stylesheet" href="/stylesheets/main.css" />
+  <noscript><link rel="stylesheet" href="noscript.css" /></noscript>
 </head>
-<body>
-  <div id="page">
-    <header>
-      <h1 id="logo"><a href = "javascript:location.reload()">thanQu</a></h1>
-      <h2 id="cname"><%= className %></h2>
-    </header>
-    <article>
-      <section id="question">
+<body class="is-loading">
+  <script src="//code.jquery.com/jquery-2.1.4.min.js"></script>
+  <!-- Wrapper -->
+    <div id="wrapper">
+      <!-- Main -->
+      <section id="background">
+        <header>
+          <h1><a href = "javascript:location.reload()">thanQu</a></h1>
+          <h2 id="cname"><%= className %></h2>
+        </header>
+        <section id="main">
+      <!-- <footer> -->
+      <article>
+        <!-- <ul class="icons"> -->
+        <section id="questions">
         <div id="qheader">
           <p><%= questionInfo[0].time %></p>
         </div>
@@ -22,20 +32,34 @@
           댓글&nbsp;<%= questionInfo[0].commentCnt %>&nbsp;공감&nbsp;<%= questionInfo[0].likeCnt %>
         </div>
       </section>
-      <section id="comment">
+      <section>
         <% commentsInfo.forEach(function(info){ %>
-          <h5><%= info.content %></h5>
+          <section id="comment">
+          <h5 id="commentcontent"><%= info.content %></h5>
+          <h7 id="commenttime"><%= info.time %></h7>
+          </section>
         <% }) %>
       </section>
     </article>
-    <form method="get" action ="/questionList/classname=<%= className %>">
+    <form onClick="history.go(-1);return true;">
       <footer>
         <input type="submit" value="목록" />
       </footer>
     </form>
+  </section>
+  </section>
+  <!-- Footer -->
+  <footer id="footer">
+    <ul class="copyright">
+      <li>&copy; thanQu</li><li>School: <a href="http://swu.ac.kr">Seoul Women's University</a></li>
+    </ul>
+  </footer>
   </div>
   <script>
-
+  if ('addEventListener' in window) {
+    window.addEventListener('load', function() { document.body.className = document.body.className.replace(/\bis-loading\b/, ''); });
+    document.body.className += (navigator.userAgent.match(/(MSIE|rv:11\.0)/) ? ' is-ie' : '');
+  }
   </script>
 </body>
 </html>

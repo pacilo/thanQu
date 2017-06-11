@@ -11,6 +11,7 @@
     <noscript><link rel="stylesheet" href="noscript.css" /></noscript>
   </head>
 	<body class="is-loading">
+		<script src="//code.jquery.com/jquery-2.1.4.min.js"></script>
     <!-- Wrapper -->
 			<div id="wrapper">
         <!-- Main -->
@@ -22,15 +23,16 @@
  					<section id="main">
 
             <!-- <footer> -->
-            <article>
+            <article id="chichi">
 							<!-- <ul class="icons"> -->
-              <section id="questions">
+              <section id="jinwoo">
                 <% if(question == null || question.length == 0){ %>
                  <p class="noData">
                    <h1 colspan="3">There is no data to show :(</h1>
                  </p>
                 <% } else { %>
                 <% question.forEach(function(question){ %>
+									<section id="questions">
                   <div id="qheader">
                     <p><%= question.time %></p>
                   </div>
@@ -38,9 +40,9 @@
                     <p><%= question.content %></p>
                   </div>
                   <div id="commentlike">
-                    <p><%= question.commentCnt %>&nbsp;<%= question.likeCnt %></p>
+                    <p>댓글<%= question.commentCnt %>&nbsp;공감<%= question.likeCnt %></p>
                   </div>
-
+										</section>
                   <% }) %>
                 <% } %>
               </section>
@@ -57,17 +59,67 @@
 					</section>
         </section>
           <!-- Footer -->
-					<footer id="footer">
-						<ul class="copyright">
-							<li>&copy; thanQu</li><li>School: <a href="http://swu.ac.kr">Seoul Women's University</a></li>
-						</ul>
-					</footer>
-        </div>
-        <script>
-				if ('addEventListener' in window) {
-					window.addEventListener('load', function() { document.body.className = document.body.className.replace(/\bis-loading\b/, ''); });
-					document.body.className += (navigator.userAgent.match(/(MSIE|rv:11\.0)/) ? ' is-ie' : '');
+				<footer id="footer">
+					<ul class="copyright">
+						<li>&copy; thanQu</li><li>School: <a href="http://swu.ac.kr">Seoul Women's University</a></li>
+					</ul>
+				</footer>
+      </div>
+    <script>
+		if ('addEventListener' in window) {
+			window.addEventListener('load', function() { document.body.className = document.body.className.replace(/\bis-loading\b/, ''); });
+			document.body.className += (navigator.userAgent.match(/(MSIE|rv:11\.0)/) ? ' is-ie' : '');
+		}
+		Notification.requestPermission();
+		var getQList = "http://1.255.54.240/api/questionList/<%= classID %>";
+		var likeThreshold = "<%= threshold %>";
+		likeThreshold *= 1;
+		var notiFinished = [];
+		function doAjax(){
+			$.ajax({
+				type : "GET",
+				url : getQList,
+				success : function(response) {
+					if (!response.success) return;
+					for (var i in response.questionInfos) {
+						if (response.questionInfos[i].likeCnt >= likeThreshold
+							 && notiFinished.indexOf(response.questionInfos[i].id) == -1) {
+								new Notification(response.questionInfos[i].content);
+								notiFinished.push(response.questionInfos[i].id);
+						}
+					}
+					var chi = document.getElementById("chichi");
+					var jin = document.getElementById("jinwoo");
+					chi.removeChild(jin);
+
+					var a = '<section id=\"jinwoo\">';
+					if (response == null || response.questionInfos.length == 0) {
+						a += '<p class=\"noData\"><h1 colspan=\"3\">There is no data to show :(</h1></p>';
+					} else {
+						for (var idx in response.questionInfos) {
+							a += '<section id=\"questions\"><div id=\"qheader\"><p>';
+							a += response.questionInfos[response.questionInfos.length - idx - 1].time;
+							a += '</p></div><div id=\"qwrite\" onclick=\"window.location = \'/classDetail/';
+							a += response.questionInfos[response.questionInfos.length - idx - 1].id;
+							a += '\'\"><p>';
+							a += response.questionInfos[response.questionInfos.length - idx - 1].content;
+							a += '</p></div><div id=\"commentlike\"><p>댓글 ';
+							a += response.questionInfos[response.questionInfos.length - idx - 1].commentCnt;
+							a += ' 공감 ';
+							a += response.questionInfos[response.questionInfos.length - idx - 1].likeCnt;
+							a += '</p></div></section>';
+						}
+						a += '</section>';
+					}
+					chi.innerHTML+=a;
 				}
-			</script>
-      </body>
-   </html>
+			});
+		}
+		window.onload = function() {
+			window.setInterval(function() {
+				doAjax();
+			}, 5000);
+		}
+		</script>
+	</body>
+</html>

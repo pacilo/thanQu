@@ -82,31 +82,33 @@ router.post('/classConfirm', function(req, res) {
 
 
 router.get('/questionList/:className', function(req, res){
+  console.log('RESTless: questionList');
+  console.log(req.params.className);
   pool.getConnection(function(error, connection){
-    console.log('들어왔어요');
     if (error)
     {
       console.log("getConnection Error" + error);
       res.sendStatus(503);
       //connection.release();
     } else {
-      connection.query('select id from class where className =?', req.session.className, function(error, row)
+      connection.query('select * from class where className =?', [req.params.className], function(error, row)
       {
         if(error) console.log("selecting Error" + error);
         else {
-          console.log(row[0].id);
           req.session.classID = row[0].id;
           connection.query('select id, classID, userID, content, time, commentCnt, likeCnt from question where classID = ?', [row[0].id] , function(error, result) {
             if(error) console.log("selecting Error" + error);
             else
             {
+              console.log(row[0].likeThreshold);
+              console.log(row[0].id);
               if(result.length == 0){
                 console.log('텅텅 비었어요');
-                res.render('realclass', {className : req.session.className, question : null});
+                res.render('realclass', {className : req.params.className, question : null, classID:row[0].id, threshold:row[0].likeThreshold});
               }
               else{
                 console.log(result);
-                res.render('realClass', {className : req.session.className, question : result});
+                res.render('realClass', {className : req.params.className, question : result, classID:row[0].id, threshold:row[0].likeThreshold});
               }
               connection.release();
             }
@@ -123,6 +125,7 @@ router.get('/classDetail/:questionID', function(req, res){
   className = req.session.className;
   classId = req.session.classID;
   console.log(questionID);
+  console.log(className);
   console.log(classId);
   pool.getConnection(function(error, connection){
     console.log('들어왔어요');
@@ -143,7 +146,7 @@ router.get('/classDetail/:questionID', function(req, res){
           connection.query('select * from comment where comment.questionID=?', [questionID], function(error, comments) {
             console.log(questionData);
             console.log(comments);
-            res.render('classDetail', {className : req.session.className, questionInfo : questionData, commentsInfo : comments});
+            res.render('classDetail', {className : className, questionInfo : questionData, commentsInfo : comments});
           })
         }
       });
@@ -304,7 +307,7 @@ router.get('/api/questionList/:classID', function(req, res) {
   });
 });
 
-router.get('/api/questionDetail/:questionID', function(req, res) {
+router.get('/api/questionDetail/:questionID/:userID', function(req, res) {
   console.log('API: get question detail');
   pool.getConnection(function(error, connection) {
     if (error) {
@@ -315,8 +318,8 @@ router.get('/api/questionDetail/:questionID', function(req, res) {
         if (err == null) {
           console.log(result);
           console.log(req.params.questionID);
-          console.log(req.session.userID);
-          connection.query('select * from heart where (questionID=? AND userID=?)', [req.params.questionID, req.session.userID], function(err2, result2) {
+          console.log(req.params.userID);
+          connection.query('select * from heart where (questionID=? AND userID=?)', [req.params.questionID, req.params.userID], function(err2, result2) {
             if (err2 == null) {
               console.log(result2);
               res.json({
@@ -360,7 +363,7 @@ router.put('/api/addLike', function(req, res) {
   });
 });
 
-router.delete('/api/removeLike', function(req, res){
+router.put('/api/removeLike', function(req, res){
   console.log('API : delete remove like');
   console.log(req.body.questionID);
   console.log(req.body.userID);
@@ -421,7 +424,7 @@ router.get('/api/commentList/:questionID', function(req,res){
           res.json({
             success : true,
             count : result.length,
-            questioninfos : result
+            infos : result
           });
         } else {
           res.json({success:false});

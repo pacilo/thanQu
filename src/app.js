@@ -29,7 +29,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 //resave 세션아이디를 접속할때마다 발급하지 않는다
 
 app.use(session({
-  cookie:{},
+  cookie:{maxAge:10800},
   secret: '12312dajfj23rj2po4$#%@#',
   resave: false,
   saveUninitialized: true,
