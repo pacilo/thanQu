@@ -41,7 +41,7 @@
         <% }) %>
       </section>
     </article>
-    <form onClick="history.go(-1);return true;">
+    <form method="get" action="/questionList/<%= className %>">
       <footer>
         <input type="submit" value="목록" />
       </footer>

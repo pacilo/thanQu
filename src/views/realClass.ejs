@@ -84,7 +84,11 @@
 					for (var i in response.questionInfos) {
 						if (response.questionInfos[i].likeCnt >= likeThreshold
 							 && notiFinished.indexOf(response.questionInfos[i].id) == -1) {
-								new Notification(response.questionInfos[i].content);
+								 var notification = new Notification("ThanQu",{
+ 									body: response.questionInfos[i].content,
+ 									icon: 'http://imageog.flaticon.com/icons/png/512/138/138533.png?size=1200x630f&pad=10,10,10,10&ext=png&bg=FFFFFFFF',
+ 									dir:'auto'
+ 								});
 								notiFinished.push(response.questionInfos[i].id);
 						}
 					}
