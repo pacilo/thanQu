@@ -74,6 +74,7 @@
 		var getQList = "http://1.255.54.240/api/questionList/<%= classID %>";
 		var likeThreshold = "<%= threshold %>";
 		likeThreshold *= 1;
+		var notiFinished = [];
 		function doAjax(){
 			$.ajax({
 				type : "GET",
@@ -81,8 +82,10 @@
 				success : function(response) {
 					if (!response.success) return;
 					for (var i in response.questionInfos) {
-						if (response.questionInfos[i].likeCnt >= likeThreshold) {
+						if (response.questionInfos[i].likeCnt >= likeThreshold
+							 && notiFinished.indexOf(response.questionInfos[i].id) == -1) {
 								new Notification(response.questionInfos[i].content);
+								notiFinished.push(response.questionInfos[i].id);
 						}
 					}
 					var chi = document.getElementById("chichi");
@@ -95,15 +98,15 @@
 					} else {
 						for (var idx in response.questionInfos) {
 							a += '<section id=\"questions\"><div id=\"qheader\"><p>';
-							a += response.questionInfos[idx].time;
+							a += response.questionInfos[response.questionInfos.length - idx - 1].time;
 							a += '</p></div><div id=\"qwrite\" onclick=\"window.location = \'/classDetail/';
-							a += response.questionInfos[idx].id;
+							a += response.questionInfos[response.questionInfos.length - idx - 1].id;
 							a += '\'\"><p>';
-							a += response.questionInfos[idx].content;
+							a += response.questionInfos[response.questionInfos.length - idx - 1].content;
 							a += '</p></div><div id=\"commentlike\"><p>댓글 ';
-							a += response.questionInfos[idx].commentCnt;
+							a += response.questionInfos[response.questionInfos.length - idx - 1].commentCnt;
 							a += ' 공감 ';
-							a += response.questionInfos[idx].likeCnt;
+							a += response.questionInfos[response.questionInfos.length - idx - 1].likeCnt;
 							a += '</p></div></section>';
 						}
 						a += '</section>';
