@@ -67,9 +67,18 @@ public class LoginActivity extends AppCompatActivity {
                     startActivity(new Intent(LoginActivity.this, JoinActivity.class));
                     break;
                 case R.id.login:
+                    if (idInput.getText().length() <= 0) {
+                        Toast.makeText(LoginActivity.this, "아이디를 입력해주세요", Toast.LENGTH_SHORT).show();
+                        return;
+                    } else if (pwInput.getText().length() <= 0) {
+                        Toast.makeText(LoginActivity.this, "비밀번호를 입력해주세요", Toast.LENGTH_SHORT).show();
+                        return;
+                    }
+
                     StringRequest stringRequest = new StringRequest(Request.Method.POST, ROOT + LOGIN, new Response.Listener<String>() {
                         @Override
                         public void onResponse(String response) {
+//                            Utility.dismissProgressDlg();
                             try {
                                 JSONObject obj = new JSONObject(response);
                                 if (obj.getBoolean("success") == false) {
@@ -88,6 +97,7 @@ public class LoginActivity extends AppCompatActivity {
                     }, new Response.ErrorListener() {
                         @Override
                         public void onErrorResponse(VolleyError error) {
+//                            Utility.dismissProgressDlg();
                             Log.d("LOGIN_REQ", error.toString());
                             Toast.makeText(LoginActivity.this, "로그인 실패", Toast.LENGTH_SHORT).show();
                             return;
@@ -101,6 +111,8 @@ public class LoginActivity extends AppCompatActivity {
                             return params;
                         }
                     };
+
+//                    Utility.showProgressDlg(LoginActivity.this);
                     q.add(stringRequest);
                     break;
             }

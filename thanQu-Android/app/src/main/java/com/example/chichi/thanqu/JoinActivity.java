@@ -55,9 +55,21 @@ public class JoinActivity extends AppCompatActivity {
     private View.OnClickListener listener = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
+            if (idInput.getText().length() < 6) {
+                Toast.makeText(JoinActivity.this, "아이디는 6글자 이상 20자 이내로 해주세요", Toast.LENGTH_SHORT).show();
+                return;
+            } else if (pwInput.getText().length() < 8) {
+                Toast.makeText(JoinActivity.this, "비밀번호는 8글자 이상 32자 이내로 해주세요", Toast.LENGTH_SHORT).show();
+                return;
+            } else if (emailInput.getText().length() <= 0) {
+                Toast.makeText(JoinActivity.this, "이메일을 입력해주세요", Toast.LENGTH_SHORT).show();
+                return;
+            }
+
             StringRequest stringRequest = new StringRequest(Request.Method.POST, ROOT + JOIN, new Response.Listener<String>() {
                 @Override
                 public void onResponse(String response) {
+//                    Utility.dismissProgressDlg();
                     try {
                         JSONObject obj = new JSONObject(response);
                         if (obj.getBoolean("success") == false) {
@@ -74,6 +86,7 @@ public class JoinActivity extends AppCompatActivity {
             }, new Response.ErrorListener() {
                 @Override
                 public void onErrorResponse(VolleyError error) {
+//                    Utility.dismissProgressDlg();
                     Log.d("JOIN_REQ", error.toString());
                     Toast.makeText(JoinActivity.this, "회원가입 실패", Toast.LENGTH_SHORT).show();
                     return;
@@ -88,6 +101,7 @@ public class JoinActivity extends AppCompatActivity {
                     return params;
                 }
             };
+//            Utility.showProgressDlg(JoinActivity.this);
             q.add(stringRequest);
         }
     };

@@ -49,7 +49,7 @@ public class QuestionListAdapater extends  RecyclerView.Adapter<QuestionListAdap
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
         holder.tv_writer.setText("댓글 "+ list.get(position).commentCnt.toString()); //작성자
-        holder.tv_title.setText("공감 " +list.get(position).likeCnt.toString()); //제목
+        holder.tv_title.setText("좋아요 " +list.get(position).likeCnt.toString()); //제목
         holder.tv_content.setText(list.get(position).content.toString()); //내용 일부
         holder.tv_date.setText(list.get(position).time.toString()); //작성일
     }

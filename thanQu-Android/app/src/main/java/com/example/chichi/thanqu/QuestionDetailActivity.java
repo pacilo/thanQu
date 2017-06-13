@@ -87,13 +87,14 @@ public class QuestionDetailActivity extends AppCompatActivity {
                     StringRequest disLikeReq = new StringRequest(Request.Method.PUT, ROOT + REMOVELIKE, new Response.Listener<String>() {
                         @Override
                         public void onResponse(String response) {
+//                            Utility.dismissProgressDlg();
                             try {
                                 JSONObject obj = new JSONObject(response);
                                 if (obj.getBoolean("success") == false) {
                                     return;
                                 } else {
+//                                    Utility.showProgressDlg(QuestionDetailActivity.this);
                                     q.add(stringRequest);
-//                                    q.add(commentRequest);
                                 }
                             } catch (JSONException e) {
                                 e.printStackTrace();
@@ -102,6 +103,7 @@ public class QuestionDetailActivity extends AppCompatActivity {
                     }, new Response.ErrorListener() {
                         @Override
                         public void onErrorResponse(VolleyError error) {
+//                            Utility.dismissProgressDlg();
                             Log.d("DISLIKE_REQ", error.toString());
                         }
                     }) {
@@ -118,13 +120,14 @@ public class QuestionDetailActivity extends AppCompatActivity {
                     StringRequest addLikeReq = new StringRequest(Request.Method.PUT, ROOT + ADDLIKE, new Response.Listener<String>() {
                         @Override
                         public void onResponse(String response) {
+//                            Utility.dismissProgressDlg();
                             try {
                                 JSONObject obj = new JSONObject(response);
                                 if (obj.getBoolean("success") == false) {
                                     return;
                                 } else {
+//                                    Utility.showProgressDlg(QuestionDetailActivity.this);
                                     q.add(stringRequest);
-//                                    q.add(commentRequest);
                                 }
                             } catch (JSONException e) {
                                 e.printStackTrace();
@@ -133,6 +136,7 @@ public class QuestionDetailActivity extends AppCompatActivity {
                     }, new Response.ErrorListener() {
                         @Override
                         public void onErrorResponse(VolleyError error) {
+//                            Utility.dismissProgressDlg();
                             Log.d("LIKE_REQ", error.toString());
                         }
                     }) {
@@ -144,6 +148,8 @@ public class QuestionDetailActivity extends AppCompatActivity {
                             return params;
                         }
                     };
+
+//                    Utility.showProgressDlg(QuestionDetailActivity.this);
                     q.add(addLikeReq);
                 }
             }
@@ -168,6 +174,7 @@ public class QuestionDetailActivity extends AppCompatActivity {
                 StringRequest addCommentRequest = new StringRequest(Request.Method.POST, ROOT + MAKECOMMENT, new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
+//                        Utility.dismissProgressDlg();
                         try {
                             JSONObject obj = new JSONObject(response);
                             if (obj.getBoolean("success") == false) {
@@ -187,6 +194,7 @@ public class QuestionDetailActivity extends AppCompatActivity {
                 }, new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
+//                        Utility.dismissProgressDlg();
                         Log.d("ADDCOMMENT_REQ", error.toString());
                         Toast.makeText(QuestionDetailActivity.this, "댓글등록 실패", Toast.LENGTH_SHORT).show();
                         return;
@@ -201,6 +209,8 @@ public class QuestionDetailActivity extends AppCompatActivity {
                         return params;
                     }
                 };
+
+//                Utility.showProgressDlg(QuestionDetailActivity.this);
                 q.add(addCommentRequest);
             }
         });
@@ -223,6 +233,7 @@ public class QuestionDetailActivity extends AppCompatActivity {
         stringRequest = new StringRequest(Request.Method.GET, ROOT + QUESTIONDETAIL + "/" + questionID + "/" + AppProperties.userID, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
+//                Utility.dismissProgressDlg();
                 try {
                     JSONObject rootObj = new JSONObject(response);
                     if (rootObj.getBoolean("success") == false) {
@@ -239,6 +250,7 @@ public class QuestionDetailActivity extends AppCompatActivity {
                     model.commentCnt = obj.getInt("commentCnt");
                     model.likeCnt = obj.getInt("likeCnt");
                     model.didLike = rootObj.getBoolean("didLike");
+
                     if (!isFinishing()) {
                         runOnUiThread(new Runnable() {
                             @Override
@@ -247,10 +259,12 @@ public class QuestionDetailActivity extends AppCompatActivity {
                                 content.setText(model.content);
                                 time.setText(model.time);
                                 commentCnt.setText("덧글 " + model.commentCnt.toString());
-                                likeCnt.setText("공감 " + model.likeCnt.toString());
+                                likeCnt.setText("좋아요 " + model.likeCnt.toString());
                             }
                         });
                     }
+
+//                    Utility.showProgressDlg(QuestionDetailActivity.this);
                     q.add(commentRequest);
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -259,13 +273,16 @@ public class QuestionDetailActivity extends AppCompatActivity {
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
+//                Utility.dismissProgressDlg();
                 Log.d("QUESTIONDETAIL_REQ", error.toString());
+                Toast.makeText(QuestionDetailActivity.this, "질문목록 조회실패", Toast.LENGTH_SHORT).show();
             }
         });
 
         commentRequest = new StringRequest(Request.Method.GET, ROOT + COMMENTLIST + "/" + questionID, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
+//                Utility.dismissProgressDlg();
                 try {
                     JSONObject rootObj = new JSONObject(response);
                     if (rootObj.getBoolean("success") == false) {
@@ -292,11 +309,13 @@ public class QuestionDetailActivity extends AppCompatActivity {
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
+//                Utility.dismissProgressDlg();
                 Log.d("COMMENTLIST_REQ", error.toString());
+                Toast.makeText(QuestionDetailActivity.this, "댓글목록 조회실패", Toast.LENGTH_SHORT).show();
             }
         });
 
+//        Utility.showProgressDlg(QuestionDetailActivity.this);
         q.add(stringRequest);
-//        q.add(commentRequest);
     }
 }

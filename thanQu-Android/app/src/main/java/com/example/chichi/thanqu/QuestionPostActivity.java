@@ -51,14 +51,15 @@ public class QuestionPostActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                if (edit.getText().toString().length() < 6) {
-                    Toast.makeText(QuestionPostActivity.this, "질문은 6글자 이상 해주세요", Toast.LENGTH_SHORT).show();
+                if (edit.getText().toString().length() < 6 || edit.getText().toString().length() > 32) {
+                    Toast.makeText(QuestionPostActivity.this, "질문은 6글자 이상 32자 이내로 해주세요", Toast.LENGTH_SHORT).show();
                     return;
                 }
 
                 StringRequest stringRequest = new StringRequest(Request.Method.POST, ROOT + MAKEQUESTION, new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
+//                        Utility.dismissProgressDlg();
                         try {
                             JSONObject obj = new JSONObject(response);
                             if (obj.getBoolean("success") == false) {
@@ -75,6 +76,7 @@ public class QuestionPostActivity extends AppCompatActivity {
                 }, new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
+//                        Utility.dismissProgressDlg();
                         Log.d("ADD_QUESTION_REQ", error.toString());
                         Toast.makeText(QuestionPostActivity.this, "질문등록 실패", Toast.LENGTH_SHORT).show();
                         return;
@@ -89,6 +91,7 @@ public class QuestionPostActivity extends AppCompatActivity {
                         return params;
                     }
                 };
+//                Utility.showProgressDlg(QuestionPostActivity.this);
                 q.add(stringRequest);
             }
         });
