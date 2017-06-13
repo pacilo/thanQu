@@ -7,7 +7,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -69,6 +68,7 @@ public class ClassListActivity extends AppCompatActivity {
         StringRequest stringRequest = new StringRequest(Request.Method.GET, ROOT + CLASSLIST, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
+//                Utility.dismissProgressDlg();
                 try {
                     JSONObject rootObj = new JSONObject(response);
                     if (rootObj.getBoolean("success") == false) {
@@ -93,10 +93,13 @@ public class ClassListActivity extends AppCompatActivity {
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
+//                Utility.dismissProgressDlg();
                 Log.d("CLASSLIST_REQ", error.toString());
+                Toast.makeText(ClassListActivity.this, "강의목록 조회실패", Toast.LENGTH_SHORT).show();
             }
         });
 
+//        Utility.showProgressDlg(ClassListActivity.this);
         q.add(stringRequest);
     }
 }

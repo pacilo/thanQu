@@ -1,5 +1,6 @@
 package com.example.chichi.thanqu;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -96,6 +97,8 @@ public class QuestionListActivity extends AppCompatActivity {
         StringRequest stringRequest = new StringRequest(Request.Method.GET, ROOT + QUESTIONLIST + "/" + classID, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
+//                Utility.dismissProgressDlg();
+
                 try {
                     JSONObject rootObj = new JSONObject(response);
                     if (rootObj.getBoolean("success") == false) {
@@ -124,10 +127,13 @@ public class QuestionListActivity extends AppCompatActivity {
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
+//                Utility.dismissProgressDlg();
                 Log.d("QUESTIONLIST_REQ", error.toString());
+                Toast.makeText(QuestionListActivity.this, "질문목록 조회실패", Toast.LENGTH_SHORT).show();
             }
         });
 
+//        Utility.showProgressDlg(QuestionListActivity.this);
         q.add(stringRequest);
     }
 }

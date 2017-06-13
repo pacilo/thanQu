@@ -42,6 +42,7 @@ public class MainActivity extends AppCompatActivity {
                 StringRequest stringRequest = new StringRequest(Request.Method.POST, ROOT + LOGOUT, new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
+//                        Utility.dismissProgressDlg();
                         AppProperties.userID = null;
                         Toast.makeText(MainActivity.this, "로그아웃 되었습니다", Toast.LENGTH_SHORT).show();
                         startActivity(new Intent(MainActivity.this, LoginActivity.class));
@@ -49,10 +50,12 @@ public class MainActivity extends AppCompatActivity {
                 }, new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
+//                        Utility.dismissProgressDlg();
                         Log.d("LOGOUT_REQ", error.toString());
                     }
                 });
 
+//                Utility.showProgressDlg(MainActivity.this);
                 q.add(stringRequest);
             }
         });
